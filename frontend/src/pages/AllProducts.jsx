@@ -4,6 +4,7 @@ import axios from 'axios';
 import Nav from '../components/myComponents/ui/Nav';
 import { useState, useEffect } from 'react'
 import { ChevronDown, Check, Filter } from 'lucide-react';
+import Footer from '../components/myComponents/ui/Footer';
 
 function EnhancedCategoryDropdown({ categories, selectedCategory, onChange }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -202,6 +203,7 @@ export default function AllProducts() {
                     )}
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
