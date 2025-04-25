@@ -58,15 +58,15 @@ const ProductCard = ({ product }) => {
             {Boolean(product.isDiscounted) ? (
               <div className="flex items-center">
                 <span className="text-xs text-gray-500 line-through ml-1 xs:inline">
-                  IQD {product.price.toFixed(3)}
+                  IQD {product?.price?.toFixed(3)}
                 </span>
                 <span className="font-bold text-xs md:text-sm text-red-600">
-                  IQD {product.discount_price !== null ? product.discount_price.toFixed(2) : ''}
+                  IQD {product.discount_price !== null ? product?.discount_price?.toFixed(2) : ''}
                 </span>
               </div>
             ) : (
               <span className={`font-bold text-xs md:text-sm ${Boolean(product.isSoldOut) ? 'text-gray-500' : 'text-gray-800'}`}>
-                IQD {product.price.toFixed(3)}
+                IQD {product?.price?.toFixed(3)}
               </span>
             )}
           </div>

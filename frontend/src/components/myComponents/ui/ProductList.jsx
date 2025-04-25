@@ -6,7 +6,7 @@ const ProductList = ({ products }) => {
       {/* <h2 className="text-xl font-bold text-gray-800 mb-4">Featured Products</h2> */}
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {products.map(product => (
+        {products?.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

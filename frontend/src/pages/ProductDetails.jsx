@@ -4,9 +4,12 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Nav from '../components/myComponents/ui/Nav';
 import Footer from '../components/myComponents/ui/Footer';
+import ProductList from '../components/myComponents/ui/ProductList';
 
 const ProductDetail = () => {
     const [product, setProduct] = useState([]);
+    const [otherColors, setOtherColors] = useState([]);
+    const [similarProducts, setSimilarProducts] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { id } = useParams();
 
@@ -23,7 +26,32 @@ const ProductDetail = () => {
             }
         }
 
+        const fetchOtherColors = async () => {
+            try {
+                const res = await axios.get(`http://localhost:4000/products/getothercolors/${id}`);
+                if (res.status === 200) {
+                    setOtherColors(res.data);
+                }
+            } catch (err) {
+                console.error("Error fetching other colors:", err);
+            }
+        }
+
+        const fetchSimilarProducts = async () => {
+            try {
+                const res = await axios.get(`http://localhost:4000/products/getsimilarproducts/${id}`);
+                console.log(res.data);
+                if (res.status === 200) {
+                    setSimilarProducts(res.data);
+                }
+            } catch (err) {
+                console.error("Error fetching similar products:", err);
+            }
+        }
+
         fetchProduct();
+        fetchOtherColors();
+        fetchSimilarProducts();
     }, [id]);
 
     const nextImage = () => {
@@ -64,7 +92,7 @@ const ProductDetail = () => {
                                     />
                                 ) : (
                                     <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-                                        <span className="text-gray-500">No image available</span>
+                                        <span className="text-gray-500">هیچ ڕەسمێک بەردەست نیە</span>
                                     </div>
                                 )}
 
@@ -182,7 +210,14 @@ const ProductDetail = () => {
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div dir='rtl' className="container mx-auto px-4 py-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">ڕەنگەکانی تری ئەم کاڵایە</h2>
+                    <ProductList products={otherColors} />
+                </div>
+                <div dir='rtl' className="container mx-auto px-4 py-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">هاوشێوەی ئەم کاڵایە</h2>
+                    <ProductList products={similarProducts} />
                 </div>
             </div>
             <Footer />
