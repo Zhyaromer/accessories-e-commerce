@@ -10,7 +10,7 @@ export default function Main() {
   useEffect(() => {
     const fetchNewestProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/products/newest');
+        const res = await axios.get('http://localhost:4000/products/newest');
 
         if (res.status === 200) {
           setNewestProducts(res.data);
@@ -40,7 +40,7 @@ export default function Main() {
                 داژیر ستۆر هەڵبژێرە
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-[hsl(258,57%,60%)] text-white px-4 py-3 rounded-md font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
+                <button type="button" onClick={() => window.location.href = '/products'} className="bg-[hsl(258,57%,60%)] text-white px-4 py-3 rounded-md font-bold hover:bg-indigo-700 transition-colors cursor-pointer">
                   <div className="flex items-center">
                     <div>
                       <span>بازار بکە</span>
@@ -77,7 +77,7 @@ export default function Main() {
           <ProductList products={newestProducts} />
 
           <div className="text-center mt-8">
-            <a href="#" className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700">
+            <a href="/products" className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700">
               <ChevronLeft size={16} className="mr-1" />
              بینینی زیاتر
             </a>

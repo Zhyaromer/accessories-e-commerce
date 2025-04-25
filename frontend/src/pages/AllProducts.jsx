@@ -3,12 +3,107 @@ import ProductList from '../components/myComponents/ui/ProductList';
 import axios from 'axios';
 import Nav from '../components/myComponents/ui/Nav';
 import { useState, useEffect } from 'react'
+import { ChevronDown, Check, Filter } from 'lucide-react';
+
+function EnhancedCategoryDropdown({ categories, selectedCategory, onChange }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [displayValue, setDisplayValue] = useState('هەموو بەرهەمەکان');
+
+    useEffect(() => {
+        if (!selectedCategory) {
+            setDisplayValue('هەموو بەرهەمەکان');
+        } else {
+            const category = categories.find(c => c._id === selectedCategory);
+            if (category) setDisplayValue(category.name);
+        }
+    }, [selectedCategory, categories]);
+
+    useEffect(() => {
+        const handleClickOutside = () => setIsOpen(false);
+        if (isOpen) {
+            document.addEventListener('click', handleClickOutside);
+            return () => document.removeEventListener('click', handleClickOutside);
+        }
+    }, [isOpen]);
+
+    const handleSelect = (categoryId) => {
+        onChange({ target: { value: categoryId } });
+        setIsOpen(false);
+    };
+
+    return (
+        <div dir='rtl' className="relative z-50 w-full md:w-64">
+            <button
+                type="button"
+                className="cursor-pointer flex items-center justify-between w-full px-4 py-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[hsl(258,57%,60%)] transition-all duration-200"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(!isOpen);
+                }}
+            >
+                <div className="flex items-center space-x-2">
+                    <Filter size={16} className="text-[hsl(258,57%,60%)]" />
+                    <span className="text-gray-700 font-medium">{displayValue}</span>
+                </div>
+                <ChevronDown
+                    size={18}
+                    className={`text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
+                />
+            </button>
+
+            {isOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 max-h-60 overflow-y-auto custom-scrollbar">
+                    <div
+                        className="flex items-center px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                        onClick={() => handleSelect('')}
+                    >
+                        <div className="flex-1">هەموو بەرهەمەکان</div>
+                        {!selectedCategory && <Check size={16} className="text-[hsl(258,57%,60%)]" />}
+                    </div>
+
+                    {categories.map((category) => (
+                        <div
+                            key={category._id}
+                            className="flex items-center px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                            onClick={() => handleSelect(category._id)}
+                        >
+                            <div className="flex-1">{category.name}</div>
+                            {selectedCategory === category._id && <Check size={16} className="text-[hsl(258,57%,60%)]" />}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: red;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: red;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: red;
+        }
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: #b29ce4 white;
+        }
+      `}</style>
+        </div>
+    );
+}
 
 export default function AllProducts() {
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-    
+
     const categories = [
         { _id: "کاتژمێر", name: "کاتژمێر" },
         { _id: "clothing", name: "Clothing" },
@@ -20,21 +115,21 @@ export default function AllProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                let url = 'http://localhost:3000/products/getall';
+                let url = 'http://localhost:4000/products/getall';
                 const queryParams = [];
-                
+
                 if (selectedCategory) {
                     queryParams.push(`category=${selectedCategory}`);
                 }
-                
+
                 if (sortOrder) {
                     queryParams.push(`sort=${sortOrder}`);
                 }
-                
+
                 if (queryParams.length > 0) {
                     url += `?${queryParams.join('&')}`;
                 }
-                
+
                 const res = await axios.get(url);
 
                 if (res.status === 200) {
@@ -64,43 +159,47 @@ export default function AllProducts() {
                 <div className="mt-16">
                     <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                         <div className="w-full md:w-auto">
-                            <select
-                                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                value={selectedCategory}
+                            <EnhancedCategoryDropdown
+                                categories={categories}
+                                selectedCategory={selectedCategory}
                                 onChange={handleCategoryChange}
-                            >
-                                <option value="">All Categories</option>
-                                {categories.map((category) => (
-                                    <option key={category._id} value={category._id}>
-                                        {category.name}
-                                    </option>
-                                ))}
-                            </select>
+                            />
                         </div>
                         <div className="flex gap-2">
                             <button
-                                className={`px-4 py-2 rounded-md transition-colors ${
-                                    sortOrder === 'asc' 
-                                        ? 'bg-blue-600 text-white'
+                                className={`cursor-pointer px-4 py-2 rounded-md transition-colors ${sortOrder === 'asc'
+                                        ? 'bg-[hsl(258,57%,60%)] text-white'
                                         : 'bg-gray-200 hover:bg-gray-300'
-                                }`}
+                                    }`}
                                 onClick={() => handleSortChange('asc')}
                             >
-                                Price: Low to High
+                                نرخ: کەمترین بۆ زۆرترین
                             </button>
                             <button
-                                className={`px-4 py-2 rounded-md transition-colors ${
-                                    sortOrder === 'desc' 
-                                        ? 'bg-blue-600 text-white'
+                                className={`cursor-pointer px-4 py-2 rounded-md transition-colors ${sortOrder === 'desc'
+                                        ? 'bg-[hsl(258,57%,60%)] text-white'
                                         : 'bg-gray-200 hover:bg-gray-300'
-                                }`}
+                                    }`}
                                 onClick={() => handleSortChange('desc')}
                             >
-                                Price: High to Low
+                                نرخ: زۆرترین بۆ کەمترین
                             </button>
                         </div>
+
+
                     </div>
+
+                    <div dir='rtl' className='flex justify-start'>
+                        <p className="text-base">{products.length} بەرهەم دۆزرایەوە</p>
+                    </div>
+
                     <ProductList products={products} />
+
+                    {products.length === 0 && (
+                        <div className="text-center text-gray-500 mt-8">
+                            No products found for the {selectedCategory || 'all'} category.
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
