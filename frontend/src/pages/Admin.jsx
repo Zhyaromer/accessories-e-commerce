@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { Search, Plus, Edit, Trash2, X, Save, ArrowDown, ArrowUp, Package, DollarSign, ShoppingCart, Archive } from 'lucide-react';
+import axios from 'axios';
 
 export default function AdminDashboard() {
     const [products, setProducts] = useState([]);
@@ -123,6 +124,18 @@ export default function AdminDashboard() {
 
         setProducts(mockProducts);
         setFilteredProducts(mockProducts);
+    }, []);
+
+    useEffect(() => {
+        const checkAuth = async () => { 
+            const response = await axios.get('/admin/checkauth', { withCredentials: true });
+            console.log(response.status);
+            if (response.status === 401) {
+                window.location.href = '/admin/login';
+            }
+        }
+
+        checkAuth();
     }, []);
 
     useEffect(() => {

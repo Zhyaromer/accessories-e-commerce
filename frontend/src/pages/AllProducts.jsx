@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
 import ProductList from '../components/myComponents/ui/ProductList';
 import axios from 'axios';
 import Nav from '../components/myComponents/ui/Nav';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { ChevronDown, Check, Filter } from 'lucide-react';
 import Footer from '../components/myComponents/ui/Footer';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'; // React Router imports
 
 function EnhancedCategoryDropdown({ categories, selectedCategory, onChange }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ function EnhancedCategoryDropdown({ categories, selectedCategory, onChange }) {
     }, [isOpen]);
 
     const handleSelect = (categoryId) => {
-        onChange({ target: { value: categoryId } });
+        onChange(categoryId);
         setIsOpen(false);
     };
 
@@ -101,9 +102,10 @@ function EnhancedCategoryDropdown({ categories, selectedCategory, onChange }) {
 }
 
 export default function AllProducts() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [products, setProducts] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [sortOrder, setSortOrder] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
+    const [sortOrder, setSortOrder] = useState(searchParams.get('sort') || '');
 
     const categories = [
         { _id: "کاتژمێر", name: "کاتژمێر" },
@@ -131,6 +133,7 @@ export default function AllProducts() {
                     url += `?${queryParams.join('&')}`;
                 }
 
+                console.log(url);
                 const res = await axios.get(url);
 
                 if (res.status === 200) {
@@ -143,10 +146,17 @@ export default function AllProducts() {
         };
 
         fetchProducts();
-    }, [selectedCategory, sortOrder]);
 
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
+        const params = new URLSearchParams();
+        if (selectedCategory) params.set('category', selectedCategory);
+        if (sortOrder) params.set('sort', sortOrder);
+        
+        setSearchParams(params);
+        
+    }, [selectedCategory, sortOrder, setSearchParams]);
+
+    const handleCategoryChange = (categoryId) => {
+        setSelectedCategory(categoryId);
     };
 
     const handleSortChange = (order) => {
@@ -186,8 +196,6 @@ export default function AllProducts() {
                                 نرخ: زۆرترین بۆ کەمترین
                             </button>
                         </div>
-
-
                     </div>
 
                     <div dir='rtl' className='flex justify-start'>
@@ -205,5 +213,5 @@ export default function AllProducts() {
             </div>
             <Footer />
         </div>
-    )
+    );
 }

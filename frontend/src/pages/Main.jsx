@@ -17,7 +17,6 @@ export default function Main() {
           setNewestProducts(res.data);
         }
       } catch (error) {
-        console.error('Error fetching newest products:', error);
         setNewestProducts([]);
       }
     }
@@ -96,16 +95,16 @@ export default function Main() {
           </div>
           <div dir='rtl' className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: "کاتژمێر", count: "24 پارچە", image: "https://www.engraversguild.co.uk/wp-content/uploads/2022/11/nurse-watch-mq-landscape-scaled.jpg" },
-              { name: "ملوانکە", count: "36 پارچە", image: "https://th.bing.com/th/id/R.a16c5c636f811f25366b6b7d725a307e?rik=VpZ6iVflPqRuHg&riu=http%3a%2f%2fwww.wellfield.th.com%2fimgadmins%2fgallery%2f139866522410K-06.jpg&ehk=78hwBRTSbBHsO%2fePiASiob9m8rKWJIVxcT1p1PPTAhA%3d&risl=&pid=ImgRaw&r=0" },
-              { name: "دەستبەند", count: "18 پارچە", image: "https://wallpapercave.com/wp/wp2487315.jpg" },
+              { name: "کاتژمێر", count: "24 پارچە", image: "https://www.engraversguild.co.uk/wp-content/uploads/2022/11/nurse-watch-mq-landscape-scaled.jpg", link: "http://localhost:5173/products?category=%DA%A9%D8%A7%D8%AA%DA%98%D9%85%DB%8E%D8%B1" },
+              { name: "ملوانکە", count: "36 پارچە", image: "https://th.bing.com/th/id/R.a16c5c636f811f25366b6b7d725a307e?rik=VpZ6iVflPqRuHg&riu=http%3a%2f%2fwww.wellfield.th.com%2fimgadmins%2fgallery%2f139866522410K-06.jpg&ehk=78hwBRTSbBHsO%2fePiASiob9m8rKWJIVxcT1p1PPTAhA%3d&risl=&pid=ImgRaw&r=0",link : "http://localhost:5173/products?category=ملوانکە" },
+              { name: "دەستبەند", count: "18 پارچە", image: "https://wallpapercave.com/wp/wp2487315.jpg",link : "http://localhost:5173/products?category=دەستبەند" },
             ].map((category, index) => (
               <div key={index} className="relative rounded-lg overflow-hidden group">
                 <img src={category.image} alt={category.name} className="w-full h-64 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
                   <h3 className="text-white text-xl font-semibold">{category.name}</h3>
                   <p className="text-gray-300 mb-3">{category.count}</p>
-                  <a href="#" className="text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-md inline-block w-max transition-colors">
+                  <a href={category.link} className="text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-md inline-block w-max transition-colors">
                     بینینی زیاتر
                   </a>
                 </div>

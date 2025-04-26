@@ -1,9 +1,8 @@
 const db = require("../../config/sql.js");
 
 const getAllProducts = async (_req, res) => {
-    const { category } = _req.query;
-    const { sort } = _req.query;
-    
+    const { category, sort } = _req.query;
+
     try {
         let sql = `
             SELECT 
@@ -15,25 +14,25 @@ const getAllProducts = async (_req, res) => {
                 ) AS colors
             FROM products p
         `;
-        
+
         let queryParams = [];
         if (category) {
             sql += ` WHERE p.category = ?`;
             queryParams.push(category);
         }
-        
+
         sql += ` ORDER BY p.isSoldOut ASC`;
-        
+
         if (sort) {
             sql += ` ,p.isDiscounted ${sort === "asc" ? "desc" : "asc"}, p.discount_price ${sort}, p.price ${sort}`;
         }
-        
+
         const [rows] = await db.query(sql, queryParams);
-        
+
         if (rows.length === 0) {
             return res.status(404).json({ message: "No products found" });
         }
-        
+
         res.status(200).json(rows);
     } catch (err) {
         console.error("Database query error:", err);
