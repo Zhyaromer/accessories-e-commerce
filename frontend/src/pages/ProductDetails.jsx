@@ -211,14 +211,20 @@ const ProductDetail = () => {
                         </div>
                     </div>
                 </div>
-                <div dir='rtl' className="container mx-auto px-4 py-8">
+               
+                {otherColors.length > 0 && (
+                    <div dir='rtl' className="container mx-auto px-4 py-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">ڕەنگەکانی تری ئەم کاڵایە</h2>
                     <ProductList products={otherColors} />
                 </div>
-                <div dir='rtl' className="container mx-auto px-4 py-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">هاوشێوەی ئەم کاڵایە</h2>
-                    <ProductList products={similarProducts} />
-                </div>
+                )}
+                
+                {similarProducts.length > 0 && (
+                    <div dir='rtl' className="container mx-auto px-4 py-8">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">هاوشێوەی ئەم کاڵایە</h2>
+                        <ProductList products={similarProducts} />
+                    </div>
+                )}
             </div>
             <Footer />
         </div>
