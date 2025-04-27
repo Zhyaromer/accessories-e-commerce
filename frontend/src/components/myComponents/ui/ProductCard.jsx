@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
 
       <div className="relative">
         <img
-          src='https://img.ltwebstatic.com/images3_spmp/2024/08/21/0d/17242246891e012659d17e5dfe93d3335a38329a34_thumbnail_336x.webp'
+          src={product.cardimg}
           alt={product.title}
           className={`w-full h-52 object-cover ${Boolean(product.isSoldOut) ? 'opacity-70' : ''}`}
         />

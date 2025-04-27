@@ -28,7 +28,7 @@ export default function Nav() {
                             <Home size={18} />
                         </a>
                         <a href="/products" className="flex gap-2 items-center space-x-1 rtl:space-x-reverse hover:text-[hsl(0,9%,89%)] transition duration-150">
-                            <span>کەلوپەل</span>
+                            <span>بەرهەمەکانمان</span>
                             <ShoppingBag size={18} />
                         </a>
                         <a href="/delivery" className="flex gap-2 items-center space-x-1 rtl:space-x-reverse hover:text-[hsl(0,9%,89%)] transition duration-150">

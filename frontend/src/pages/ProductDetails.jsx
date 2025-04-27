@@ -199,6 +199,16 @@ const ProductDetail = () => {
                             <div className="flex gap-4 mb-8">
                                 <button
                                     disabled={product.isSoldOut === 1}
+                                    onClick={() => {
+                                        if (product.isSoldOut === 1) return;
+                                        if (localStorage.getItem('cart')?.includes(product?.id)) {
+                                            return;
+                                        }
+                                        localStorage.setItem('cart', JSON.stringify([
+                                            ...JSON.parse(localStorage.getItem('cart') || '[]'),
+                                            { id: product.id }
+                                        ]));
+                                    }}
                                     className={`flex-1 flex bg-purple-600 items-center justify-center gap-2 px-6 py-3 rounded font-medium ${product.isSoldOut === 1
                                         ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                                         : 'bg-b29ce4 text-white hover:bg-purple-700'
@@ -211,14 +221,14 @@ const ProductDetail = () => {
                         </div>
                     </div>
                 </div>
-               
+
                 {otherColors.length > 0 && (
                     <div dir='rtl' className="container mx-auto px-4 py-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">ڕەنگەکانی تری ئەم کاڵایە</h2>
-                    <ProductList products={otherColors} />
-                </div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">ڕەنگەکانی تری ئەم کاڵایە</h2>
+                        <ProductList products={otherColors} />
+                    </div>
                 )}
-                
+
                 {similarProducts.length > 0 && (
                     <div dir='rtl' className="container mx-auto px-4 py-8">
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">هاوشێوەی ئەم کاڵایە</h2>
