@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Home, Truck, Info, Menu, X, ShoppingCart, ShoppingBag } from 'lucide-react';
+import { Home, Truck, Menu, X, ShoppingCart, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Nav() {
@@ -35,7 +35,7 @@ export default function Nav() {
         <nav className="bg-[#b29ce4] text-white shadow-md">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-16">
-                    <div className="flex items-start justify-center space-x-2">
+                    <div onClick={() => navigate("/")} className="flex items-start justify-center space-x-2 cursor-pointer">
                         <div className="w-10 h-10 flex items-center justify-center">
                             <img src="462612318_3683171545327494_3471639554093747325_n.jpg" alt="" />
                         </div>
@@ -56,10 +56,6 @@ export default function Nav() {
                         <a href="/delivery" className="flex gap-2 items-center space-x-1 rtl:space-x-reverse hover:text-[hsl(0,9%,89%)] transition duration-150">
                             <span>گەیاندن</span>
                             <Truck size={18} />
-                        </a>
-                        <a href="/about" className="flex gap-2 items-center space-x-1 rtl:space-x-reverse hover:text-[hsl(0,9%,89%)] transition duration-150">
-                            <span>دەربارەی ئێمە</span>
-                            <Info size={18} />
                         </a>
                     </div>
 
@@ -105,10 +101,6 @@ export default function Nav() {
                         <a href="/delivery" className="flex items-center justify-end space-x-2 rtl:space-x-reverse py-2 px-3 hover:bg-[hsl(258,57%,80%)] rounded-lg transition duration-150">
                             <span>گەیاندن</span>
                             <Truck size={18} />
-                        </a>
-                        <a href="/about" className="flex items-center justify-end space-x-2 rtl:space-x-reverse py-2 px-3 hover:bg-[hsl(258,57%,80%)] rounded-lg transition duration-150">
-                            <span>دەربارەی ئێمە</span>
-                            <Info size={18} />
                         </a>
                     </div>
                 </div>

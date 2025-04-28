@@ -166,7 +166,7 @@ export default function AllProducts() {
     return (
         <div>
             <Nav />
-            <div className="container mx-auto px-4">
+            <div className="min-h-screen container mx-auto px-4">
                 <div className="mt-16">
                     <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                         <div className="w-full md:w-auto">
@@ -202,7 +202,9 @@ export default function AllProducts() {
                         <p className="text-base">{products.length} بەرهەم دۆزرایەوە</p>
                     </div>
 
-                    <ProductList products={products} />
+                    <div dir='rtl'>
+                        <ProductList products={products} />
+                    </div>
 
                     {products.length === 0 && (
                         <div className="text-center text-gray-500 mt-8">

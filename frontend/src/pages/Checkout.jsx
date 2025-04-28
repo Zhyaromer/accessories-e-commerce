@@ -7,11 +7,11 @@ import { useNavigate } from 'react-router-dom';
 const AmazonStyleCheckout = () => {
   const navigate = useNavigate();
   const cities = [
-    { name: 'هەولێر', cost: 5000 },
-    { name: 'سلێمانی', cost: 7000 },
-    { name: 'دهۆک', cost: 8000 },
-    { name: 'کەرکوک', cost: 10000 },
-    { name: 'هەڵەبجە', cost: 12000 },
+    { name: 'هەولێر', cost: 4 },
+    { name: 'سلێمانی', cost: 3 },
+    { name: 'دهۆک', cost: 8 },
+    { name: 'کەرکوک', cost: 10 },
+    { name: 'هەڵەبجە', cost: 12 },
   ];
 
   const [cart, setCart] = useState([]);
@@ -67,7 +67,7 @@ const AmazonStyleCheckout = () => {
   const total = subtotal + shippingCost;
 
   const formatPrice = (price) => {
-    return `${price?.toLocaleString()} د.ع`;
+    return `${price?.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })} د.ع`;
   };
 
   const getProductDetails = (item) => {

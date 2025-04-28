@@ -73,12 +73,31 @@ const ProductCard = ({ product }) => {
 
           <button
             className={`px-1 py-0.5 sm:px-2 sm:py-1 rounded-lg flex items-center justify-center cursor-pointer text-xs ${Boolean(product.isSoldOut)
-                ? 'bg-gray-400 text-gray-100 cursor-not-allowed'
-                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              ? 'bg-gray-400 text-gray-100 cursor-not-allowed'
+              : 'bg-indigo-600 text-white hover:bg-indigo-700'
               } transition-colors`}
             disabled={Boolean(product.isSoldOut)}
           >
-            <ShoppingCart size={16} className="mr-0.5 sm:mr-1" />
+            <ShoppingCart
+               onClick={(e) => {
+                e.stopPropagation();
+                if (product.isSoldOut === 1) return;
+                const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+                if (currentCart.some(item => item.id === product.id)) {
+                  return;
+                }
+
+                const updatedCart = [...currentCart, { id: product.id }];
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+                const storageEvent = new StorageEvent('storage', {
+                  key: 'cart',
+                  newValue: JSON.stringify(updatedCart),
+                  url: window.location.href
+                });
+                window.dispatchEvent(storageEvent);
+              }}
+              size={16} className="mr-0.5 sm:mr-1" />
           </button>
         </div>
       </div>

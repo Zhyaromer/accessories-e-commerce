@@ -19,7 +19,9 @@ export default function Footer() {
                             </div>
                             <h2 className="text-2xl font-bold bg-clip-text text-[#b29ce4]">داژیر ستۆر</h2>
                         </div>
-                        <p className="text-gray-200 text-center md:text-left mb-4">لە گەڵ ئێمە دنیا بە دیجیتاڵی ببینە و داهاتووی خۆت دروست بکە</p>
+                        <p dir='rtl' className="text-gray-200 text-center md:text-right mb-4">جوانترین و باشترینەکان لای ئێمە بەردەستە
+                            بۆ ئەوەی جوانیەکی تەواو بدەیتە ستایلی ڕۆژانەت ئەوا
+                            داژیر ستۆر هەڵبژێرە</p>
                     </div>
 
                     <div className="text-center md:text-right">
@@ -28,7 +30,6 @@ export default function Footer() {
                             <a href="/" className="hover:text-[#b29ce4] transition-colors duration-300">سەرەکی</a>
                             <a href="/products" className="hover:text-[#b29ce4] transition-colors duration-300">بەرهەمەکانمان</a>
                             <a href="/delivery" className="hover:text-[#b29ce4] transition-colors duration-300">گەیاندن</a>
-                            <a href="/about" className="hover:text-[#b29ce4] transition-colors duration-300">دەربارە</a>
                         </div>
                     </div>
 
@@ -49,7 +50,7 @@ export default function Footer() {
                 <div className="border-t border-gray-600 pt-6 pb-2"></div>
 
                 <div className="flex mb-8 flex-col items-center">
-                    <p className="text-gray-200 text-base">© ٢٠٢٥ داژیر ستۆر - هەموو مافەکان پارێزراوە</p>
+                    <p className="text-gray-200 text-base">©{new Date().getFullYear()} داژیر ستۆر - هەموو مافەکان پارێزراوە</p>
                 </div>
 
                 <div className="bg-[#1a1a1a] w-full text-center text-base text-gray-300">
