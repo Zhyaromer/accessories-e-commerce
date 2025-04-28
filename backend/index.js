@@ -24,7 +24,7 @@ app.use(session({
 
 app.use(cors({ 
     origin: process.env.NODE_ENV === 'production' 
-    ? 'https://accessories-e-commerce-kappa.vercel.app' 
+    ? 'https://dazhir.netlify.app/' 
     : 'http://localhost:5173',
     credentials: true 
 }));
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static(distPath));
 
-    app.get(/^(?!\/api).*/, (req, res) => {  // Match all paths except those starting with /api
+    app.get(/^(?!\/api).*/, (req, res) => { 
         res.sendFile(path.join(distPath, 'index.html'));
     });
 } else {
