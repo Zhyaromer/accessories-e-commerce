@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const port = 4000
-require('dotenv').config()
+require('dotenv').config();
+const path = require('path');
 const cors = require('cors');
 const products = require('./route/products/route.js')
 const admin = require('./route/admin/route.js')
@@ -21,11 +22,27 @@ app.use(session({
     }
 }));
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
-
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use(cors({ 
+    origin: process.env.NODE_ENV === 'production' 
+    ? 'https://accessories-e-commerce-kappa.vercel.app' 
+    : 'http://localhost:5173',
+    credentials: true 
+}));
 
 app.use('/products', products)
 app.use('/admin', admin)
+
+if (process.env.NODE_ENV === 'production') {
+    const distPath = path.join(__dirname, '../frontend/dist');
+
+    app.use(express.static(distPath));
+
+    app.get(/^(?!\/api).*/, (req, res) => {  // Match all paths except those starting with /api
+        res.sendFile(path.join(distPath, 'index.html'));
+    });
+} else {
+    app.get('/', (req, res) => res.send('Hello World!'));
+}
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

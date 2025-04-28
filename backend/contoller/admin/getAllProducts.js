@@ -25,8 +25,6 @@ const getAllProducts = async (_req, res) => {
             }
         });
 
-        console.log(rows);
-
         res.status(200).json(rows);
     } catch (err) {
         res.status(500).json({ error: "Internal server error" });

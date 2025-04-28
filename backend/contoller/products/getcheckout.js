@@ -24,7 +24,6 @@ const getCheckoutProducts = async (_req, res) => {
 
         res.status(200).json(rows);
     } catch (err) {
-        console.error("Error fetching products:", err);
         res.status(500).json({ error: "Internal server error" });
     }
 }

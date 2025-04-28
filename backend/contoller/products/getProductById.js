@@ -24,7 +24,6 @@ const getProductById = async (req, res) => {
 
         res.status(200).json({ ...rows[0], images: images});
     } catch (err) {
-        console.error("Database query error:", err);
         res.status(500).json({ error: "Internal server error" });   
     }
 }

@@ -15,10 +15,6 @@ const addProduct = async (req, res) => {
             return res.status(500).json({ message: "Failed to add product" });
         }
 
-        images.forEach(async (image) => {
-            console.log(image?.imgURL);
-        });
-
         if (images && images.length > 0) {
             images.forEach(async (image) => {
                 const imageQuery = `INSERT INTO product_images (p_id, imgURL) VALUES (?, ?)`;
@@ -28,7 +24,6 @@ const addProduct = async (req, res) => {
 
         res.status(201).json({ message: "Product added successfully", productId: rows.insertId });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
 }

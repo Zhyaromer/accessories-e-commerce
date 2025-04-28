@@ -35,7 +35,6 @@ const getAllProducts = async (_req, res) => {
 
         res.status(200).json(rows);
     } catch (err) {
-        console.error("Database query error:", err);
         res.status(500).json({ error: "Internal server error" });
     }
 }

@@ -9,8 +9,6 @@ const updateProduct = async (req, res) => {
 
     const { title, category, price, cardimg, isSoldOut, discount_price, isDiscounted, color, size, stock, images } = req.body;
 
-    console.log("Update product request body:", req.body);
-
     if (!title || !category || !price || !cardimg || !color || !stock) {
         return res.status(400).json({ message: "All fields are required" });
     }
@@ -65,7 +63,6 @@ const updateProduct = async (req, res) => {
     } catch (error) {
         await connection.rollback();
         connection.release();
-        console.error("Error updating product:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
