@@ -201,17 +201,24 @@ const ProductDetail = () => {
                                     disabled={product.isSoldOut === 1}
                                     onClick={() => {
                                         if (product.isSoldOut === 1) return;
-                                        if (localStorage.getItem('cart')?.includes(product?.id)) {
+                                        const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+                                        if (currentCart.some(item => item.id === product.id)) {
                                             return;
                                         }
-                                        localStorage.setItem('cart', JSON.stringify([
-                                            ...JSON.parse(localStorage.getItem('cart') || '[]'),
-                                            { id: product.id }
-                                        ]));
+
+                                        const updatedCart = [...currentCart, { id: product.id }];
+                                        localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+                                        const storageEvent = new StorageEvent('storage', {
+                                            key: 'cart',
+                                            newValue: JSON.stringify(updatedCart),
+                                            url: window.location.href
+                                        });
+                                        window.dispatchEvent(storageEvent);
                                     }}
-                                    className={`flex-1 flex bg-purple-600 items-center justify-center gap-2 px-6 py-3 rounded font-medium ${product.isSoldOut === 1
-                                        ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                                        : 'bg-b29ce4 text-white hover:bg-purple-700'
+                                    className={`cursor-pointer flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded font-medium ${product.isSoldOut === 1
+                                            ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                            : 'bg-purple-600 text-white hover:bg-purple-700 transition duration-200'
                                         }`}
                                 >
                                     <ShoppingBag size={18} />

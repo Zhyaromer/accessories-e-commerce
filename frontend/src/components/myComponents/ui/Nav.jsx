@@ -1,9 +1,31 @@
 import React from 'react'
-import { useState } from 'react';
-import { Home, Truck, Info, Menu, X, ShoppingCart, ShoppingBag} from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Home, Truck, Info, Menu, X, ShoppingCart, ShoppingBag } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Nav() {
+    const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [cartItemCount, setCartItemCount] = useState(() => {
+        const storedCart = localStorage.getItem("cart");
+        return storedCart ? JSON.parse(storedCart).length : 0;
+    });
+
+    useEffect(() => {
+        const updateCartCount = () => {
+            const storedCart = localStorage.getItem("cart");
+            setCartItemCount(storedCart ? JSON.parse(storedCart).length : 0);
+        };
+
+        window.addEventListener('storage', updateCartCount);
+
+        window.addEventListener('cartUpdated', updateCartCount);
+
+        return () => {
+            window.removeEventListener('storage', updateCartCount);
+            window.removeEventListener('cartUpdated', updateCartCount);
+        };
+    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -42,8 +64,13 @@ export default function Nav() {
                     </div>
 
                     <div className="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
-                        <button className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150 cursor-pointer">
+                        <button onClick={() => navigate("/checkout")} className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150 cursor-pointer relative">
                             <ShoppingCart size={20} />
+                            {cartItemCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                    {cartItemCount}
+                                </span>
+                            )}
                         </button>
                     </div>
 
