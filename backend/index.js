@@ -24,7 +24,7 @@ app.use(session({
 
 app.use(cors({ 
     origin: process.env.NODE_ENV === 'production' 
-    ? 'https://dazhir.netlify.app/' 
+    ? 'https://cool-smakager-2d558a.netlify.app/' 
     : 'http://localhost:5173',
     credentials: true 
 }));
