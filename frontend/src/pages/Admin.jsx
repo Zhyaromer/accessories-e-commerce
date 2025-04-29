@@ -29,7 +29,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/admin/getAllProducts', { withCredentials: true });
+                const response = await axios.get('https://accessories-e-commerce.onrender.com/admin/getAllProducts', { withCredentials: true });
                 setProducts(response.data);
                 setFilteredProducts(response.data);
             }
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                await axios.get('http://localhost:4000/admin/checkauth', { withCredentials: true });
+                await axios.get('https://accessories-e-commerce.onrender.com/admin/checkauth', { withCredentials: true });
             } catch (error) {
                 if (error.response && error.response.status === 401) {
                     window.location.href = '/admin/login';
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
 
     const deleteProduct = async (id) => {
         try {
-            await axios.delete(`http://localhost:4000/admin/deleteProduct/${id}`, { withCredentials: true });
+            await axios.delete(`https://accessories-e-commerce.onrender.com/admin/deleteProduct/${id}`, { withCredentials: true });
             setProducts(products.filter(product => product.id !== id));
             setFilteredProducts(filteredProducts.filter(product => product.id !== id));
         } catch (error) {
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
 
     const handleAddProduct = async () => {
         try {
-            const response = await axios.post('http://localhost:4000/admin/addProduct', newProduct, { withCredentials: true });
+            const response = await axios.post('https://accessories-e-commerce.onrender.com/admin/addProduct', newProduct, { withCredentials: true });
             if (response.status === 201) {
                 const addedProduct = { ...newProduct, id: response.data.productId };
                 setProducts([...products, addedProduct]);
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
     const handleEditProduct = async () => {
         try {
             if (selectedProduct) {
-                const res = await axios.patch(`http://localhost:4000/admin/updateProduct/${selectedProduct.id}`, selectedProduct, { withCredentials: true });
+                const res = await axios.patch(`https://accessories-e-commerce.onrender.com/admin/updateProduct/${selectedProduct.id}`, selectedProduct, { withCredentials: true });
                 if (res.status === 200) {
                     const updatedProducts = products.map(product => product.id === selectedProduct.id ? selectedProduct : product);
                     setProducts(updatedProducts);

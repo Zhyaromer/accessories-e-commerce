@@ -11,7 +11,7 @@ export default function Main() {
   useEffect(() => {
     const fetchNewestProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/products/newest');
+        const res = await axios.get('https://accessories-e-commerce.onrender.com/products/newest');
 
         if (res.status === 200) {
           setNewestProducts(res.data);

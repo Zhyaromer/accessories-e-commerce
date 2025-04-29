@@ -118,7 +118,7 @@ export default function AllProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                let url = 'http://localhost:4000/products/getall';
+                let url = 'https://accessories-e-commerce.onrender.com/products/getall';
                 const queryParams = [];
 
                 if (selectedCategory) {

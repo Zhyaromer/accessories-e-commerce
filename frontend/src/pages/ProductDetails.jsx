@@ -16,7 +16,7 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/products/getbyid/${id}`);
+                const res = await axios.get(`https://accessories-e-commerce.onrender.com/products/getbyid/${id}`);
                 if (res.status === 200) {
                     setProduct(res.data);
                 }
@@ -28,7 +28,7 @@ const ProductDetail = () => {
 
         const fetchOtherColors = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/products/getothercolors/${id}`);
+                const res = await axios.get(`https://accessories-e-commerce.onrender.com/products/getothercolors/${id}`);
                 if (res.status === 200) {
                     setOtherColors(res.data);
                 }
@@ -39,7 +39,7 @@ const ProductDetail = () => {
 
         const fetchSimilarProducts = async () => {
             try {
-                const res = await axios.get(`http://localhost:4000/products/getsimilarproducts/${id}`);
+                const res = await axios.get(`https://accessories-e-commerce.onrender.com/products/getsimilarproducts/${id}`);
                 console.log(res.data);
                 if (res.status === 200) {
                     setSimilarProducts(res.data);

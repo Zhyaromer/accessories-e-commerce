@@ -33,7 +33,7 @@ const AmazonStyleCheckout = () => {
 
   const fetchProducts = async (ids) => {
     try {
-      const response = await axios.get('http://localhost:4000/products/getcheckout?ids=' + ids.join(','));
+      const response = await axios.get('https://accessories-e-commerce.onrender.com/products/getcheckout?ids=' + ids.join(','));
       const productsData = response.data;
       setProducts(productsData);
     } catch (error) {

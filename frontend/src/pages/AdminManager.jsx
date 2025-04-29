@@ -17,7 +17,7 @@ const AdminLogin = () => {
         }
     
         try {
-            const res = await axios.post('http://localhost:4000/admin/login',  {
+            const res = await axios.post('https://accessories-e-commerce.onrender.com/admin/login',  {
                 username,
                 password
             },{withCredentials: true});
