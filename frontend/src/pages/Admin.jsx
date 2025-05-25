@@ -1,8 +1,10 @@
 import { useState, useEffect, use } from 'react';
 import { Search, Plus, Edit, Trash2, X, Save, ArrowDown, ArrowUp, Package, DollarSign, ShoppingCart, Archive, Bell } from 'lucide-react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
