@@ -56,7 +56,7 @@ export default function AdminDashboard() {
     useEffect(() => {
         const verifyAuth = async () => {
             const isAuthenticated = await checkAuthStatus();
-            if (!isAuthenticated && !onLoginPage) {
+            if (!isAuthenticated) {
                 navigate('/admin/login');
             }
         };
