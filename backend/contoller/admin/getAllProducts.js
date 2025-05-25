@@ -4,25 +4,75 @@ const getAllProducts = async (_req, res) => {
     try {
         const query = `
             SELECT 
-                p.id, p.title, p.category, p.price, p.cardimg, 
-                p.isSoldOut, p.discount_price, p.isDiscounted, 
-                p.color, p.size, p.stock,
-                GROUP_CONCAT(pi.imgURL) AS images
+                p.id, 
+                p.title, 
+                p.category, 
+                p.price, 
+                p.cardimg, 
+                p.isSoldOut, 
+                p.discount_price, 
+                p.isDiscounted, 
+                p.color, 
+                p.size, 
+                p.stock
             FROM products p
-            LEFT JOIN product_images pi ON p.id = pi.p_id
-            GROUP BY p.id`;
+            ORDER BY p.id`;
 
-        const [rows] = await db.query(query);
+        console.log('Executing products query...'); 
+        
+        const [products] = await db.query(query);
+        
+        console.log(`Found ${products.length} products`); 
 
-        const formattedRows = rows.map(row => ({
-            ...row,
-            images: row.images ? row.images.split(',') : []
+        const imageQuery = `
+            SELECT p_id, imgURL 
+            FROM product_images 
+            ORDER BY p_id`;
+            
+        const [images] = await db.query(imageQuery);
+        
+        console.log(`Found ${images.length} images`); 
+        
+        const imagesByProduct = {};
+        images.forEach(img => {
+            if (!imagesByProduct[img.p_id]) {
+                imagesByProduct[img.p_id] = [];
+            }
+            imagesByProduct[img.p_id].push(img.imgURL);
+        });
+        
+        const formattedRows = products.map(product => ({
+            id: product.id,
+            title: product.title,
+            category: product.category,
+            price: product.price,
+            cardimg: product.cardimg,
+            isSoldOut: product.isSoldOut,
+            discount_price: product.discount_price,
+            isDiscounted: product.isDiscounted,
+            color: product.color,
+            size: product.size,
+            stock: product.stock,
+            images: imagesByProduct[product.id] || []
         }));
 
+        console.log(`Returning ${formattedRows.length} formatted products`); 
         res.status(200).json(formattedRows);
+        
     } catch (err) {
         console.error('getAllProducts error:', err);
-        res.status(500).json({ error: "Internal server error", details: err.message });
+        console.error('Error details:', {
+            message: err.message,
+            code: err.code,
+            errno: err.errno,
+            sqlState: err.sqlState,
+            sqlMessage: err.sqlMessage
+        });
+        
+        res.status(500).json({ 
+            error: "Internal server error", 
+            details: err.message
+        });
     }
 };
 
