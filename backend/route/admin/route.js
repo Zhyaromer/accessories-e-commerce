@@ -7,15 +7,14 @@ const deleteProduct = require('../../contoller/admin/deleteProduct.js');
 const addProduct = require('../../contoller/admin/addProduct.js');
 const updateProduct = require('../../contoller/admin/updateProduct.js');
 
+// Public routes (no authentication needed)
 router.post('/login', login);
-router.get('/checkauth', checkAuth);
-router.get('/getAllProducts', getAllProducts);
+router.get('/checkauth', checkAuth); // This now properly checks session
 
-router.post('/addProduct', addProduct);
-
-router.patch('/updateProduct/:id', updateProduct);
-
-router.delete('/deleteProduct/:id', deleteProduct);
-
+// Protected routes (require authentication)
+router.get('/getAllProducts', checkAuth, getAllProducts);
+router.post('/addProduct', checkAuth, addProduct);
+router.patch('/updateProduct/:id', checkAuth, updateProduct);
+router.delete('/deleteProduct/:id', checkAuth, deleteProduct);
 
 module.exports = router;

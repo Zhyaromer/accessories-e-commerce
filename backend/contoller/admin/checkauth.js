@@ -1,11 +1,12 @@
-const checkAuth = (req, res) => {
+const checkAuth = (req, res, next) => {
     try {
         if (req.session.isAuthenticated) {
-            return res.status(200).json({ message: "User is authenticated" });
+            next(); 
         } else {
-            return res.status(401).json({ message: "User is not authenticated" });
+            return res.status(401).json({ message: "Unauthorized: Please login first" });
         }
     } catch (err) {
+        console.error("Auth check error:", err);
         return res.status(500).json({ message: "Internal server error" });
     }
 };

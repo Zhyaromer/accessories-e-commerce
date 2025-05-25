@@ -32,7 +32,7 @@ export default function Main() {
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 md:pl-12">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-600 leading-tight mb-6">
-                 and netfily جوانترین و باشترینەکان لای ئێمە بەردەستە
+                 جوانترین و باشترینەکان لای ئێمە بەردەستە
               </h1>
               <p className="text-lg text-gray-700 mb-8">
                 جوانترین و باشترینەکان لای ئێمە بەردەستە

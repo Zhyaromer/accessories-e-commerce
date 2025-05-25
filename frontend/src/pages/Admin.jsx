@@ -41,18 +41,26 @@ export default function AdminDashboard() {
         fetchProducts();
     }, []);
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                await axios.get('https://accessories-e-commerce.onrender.com/admin/checkauth', { withCredentials: true });
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    window.location.href = '/admin/login';
-                }
-            }
+    const checkAuthStatus = async () => {
+        try {
+            const response = await axios.get('https://accessories-e-commerce.onrender.com/admin/checkauth', {
+                withCredentials: true
+            });
+            return response.data.authenticated;
+        } catch (error) {
+            console.error('Auth check failed:', error);
+            return false;
         }
+    };
 
-        checkAuth();
+    useEffect(() => {
+        const verifyAuth = async () => {
+            const isAuthenticated = await checkAuthStatus();
+            if (!isAuthenticated && !onLoginPage) {
+                navigate('/admin/login');
+            }
+        };
+        verifyAuth();
     }, []);
 
     const deleteProduct = async (id) => {
