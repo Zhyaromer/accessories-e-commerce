@@ -56,14 +56,21 @@ export default function AdminDashboard() {
     };
 
     useEffect(() => {
+        let isMounted = true;
+
         const verifyAuth = async () => {
             const isAuthenticated = await checkAuthStatus();
-            if (!isAuthenticated) {
+            if (!isAuthenticated && isMounted) {
                 navigate('/admin/login');
             }
         };
+
         verifyAuth();
-    }, []);
+
+        return () => {
+            isMounted = false;
+        };
+    }, [navigate]);
 
     const deleteProduct = async (id) => {
         try {
