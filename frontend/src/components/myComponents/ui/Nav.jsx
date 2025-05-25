@@ -72,7 +72,7 @@ export default function Nav() {
 
                     <button
                         onClick={() => navigate("/checkout")}
-                        className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150 relative"
+                        className="flex md:hidden p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150 relative"
                     >
                         <ShoppingCart size={20} />
                         {cartItemCount > 0 && (
