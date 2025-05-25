@@ -37,7 +37,7 @@ export default function Nav() {
                 <div className="flex justify-between items-center h-16">
                     <div onClick={() => navigate("/")} className="flex items-start justify-center space-x-2 cursor-pointer">
                         <div className="w-10 h-10 flex items-center justify-center">
-                            <img src="462612318_3683171545327494_3471639554093747325_n.jpg" alt="" />
+                            <img src="/462612318_3683171545327494_3471639554093747325_n.jpg" alt="" />
                         </div>
                         <div>
                             <span className="font-bold text-xl tracking-tight text-white">داژیر</span>
@@ -70,17 +70,17 @@ export default function Nav() {
                         </button>
                     </div>
 
-                    <div className="md:hidden flex items-center space-x-4 rtl:space-x-reverse">
-                        <button className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150">
-                            <ShoppingCart size={20} />
-                        </button>
-                        <button
-                            onClick={toggleMenu}
-                            className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-300"
-                        >
-                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => navigate("/checkout")}
+                        className="p-2 rounded-full hover:bg-[hsl(258,57%,80%)] transition duration-150 relative"
+                    >
+                        <ShoppingCart size={20} />
+                        {cartItemCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                {cartItemCount}
+                            </span>
+                        )}
+                    </button>
                 </div>
             </div>
 
