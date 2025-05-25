@@ -13,10 +13,19 @@ const admin = require('./route/admin/route.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://bejewelled-monstera-2438ab.netlify.app',
+];
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? 'https://bejewelled-monstera-2438ab.netlify.app'
-    : 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
